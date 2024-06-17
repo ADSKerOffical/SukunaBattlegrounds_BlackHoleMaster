@@ -114,3 +114,123 @@ end
 end)
 
 tool.Parent = game.Players.LocalPlayer.Backpack
+
+local function ToolPack()
+local tool = Instance.new("Tool")
+tool.Name = "Ultra Skill: Domain of Deadly Stars"
+tool.RequiresHandle = false
+
+local cooldown = true
+tool.Activated:Connect(function()
+if cooldown == true then
+    cooldown = false
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local function spawnBlackHole(position, rootCFrame)
+    local args = {
+        [1] = "BlackHole",
+        [2] = "Fire",
+        [3] = {
+            ["mousepos"] = position,
+            ["rootcf"] = rootCFrame
+        }
+    }
+
+    game:GetService("ReplicatedStorage"):WaitForChild("Yuki's Black Hole Assets"):WaitForChild("SendServer"):InvokeServer(unpack(args))
+end
+
+local function spawnBlackHolesAroundPlayer()
+    for i = 1, 10 do
+        local angle = (i - 1) * math.pi / 4
+        local position = humanoidRootPart.Position + Vector3.new(math.cos(angle) * 80, 0, math.sin(angle) * 80)
+        local rootCFrame = CFrame.new(position)
+
+        coroutine.wrap(function()
+            spawnBlackHole(position, rootCFrame)
+        end)()
+    end
+
+   for i = 1, 10 do
+        local angle = (i - 1) * math.pi / 4
+        local position = humanoidRootPart.Position + Vector3.new(math.cos(angle) * 150, 0, math.sin(angle) * 150)
+        local rootCFrame = CFrame.new(position)
+
+        coroutine.wrap(function()
+            spawnBlackHole(position, rootCFrame)
+        end)()
+    end
+
+   for i = 1, 10 do
+        local angle = (i - 1) * math.pi / 4
+        local position = humanoidRootPart.Position + Vector3.new(math.cos(angle) * 300, 0, math.sin(angle) * 300)
+        local rootCFrame = CFrame.new(position)
+
+        coroutine.wrap(function()
+            spawnBlackHole(position, rootCFrame)
+        end)()
+    end
+end
+
+    spawnBlackHolesAroundPlayer()
+end
+
+end)
+
+tool.Parent = game.Players.LocalPlayer.Backpack
+
+local tool = Instance.new("Tool")
+tool.Name = "Summon Black Hole"
+tool.RequiresHandle = false
+
+tool.Activated:Connect(function()
+local player = game.Players.LocalPlayer
+        local mouse = player:GetMouse()
+        local targetPosition = mouse.Hit.Position
+        local args = {
+            [1] = "BlackHole",
+            [2] = "Fire",
+            [3] = {
+                ["mousepos"] = Vector3.new(targetPosition.X, targetPosition.Y, targetPosition.Z),
+                ["rootcf"] = CFrame.new(targetPosition)
+            }
+        }
+        local remoteEvent = game:GetService("ReplicatedStorage"):WaitForChild("Yuki's Black Hole Assets"):WaitForChild("SendServer")
+        remoteEvent:InvokeServer(unpack(args))
+end)
+
+tool.Parent = game.Players.LocalPlayer.Backpack
+end
+local tool = Instance.new("Tool")
+tool.Name = "Activate Ultimate"
+tool.RequiresHandle = false
+
+tool.Activated:Connect(function()
+local ohBoolean1 = false
+game:GetService("ReplicatedStorage").CrusedEnergy:FireServer(ohBoolean1)
+tool:Destroy()
+local Player = game:GetService("Players").LocalPlayer
+local Backpack = Player.Backpack
+local Character = Player.Character
+
+for _,v in pairs(Backpack:GetChildren()) do
+   if v:IsA("Tool") or v:IsA("HopperBin") then
+     if v.Name == "Strike of Darkness" or v.Name == "Black Hole" then
+       v:Destroy()
+      end
+   end
+end
+
+for _,v in pairs(Character:GetChildren()) do
+   if v:IsA("Tool") or v:IsA("HopperBin") then
+     if v.Name == "Strike of Darkness" or v.Name == "Black Hole" then
+       v:Destroy()
+      end
+   end 
+end
+wait(6)
+ToolPack()
+end)
+
+tool.Parent = game.Players.LocalPlayer.Backpack
