@@ -1,0 +1,116 @@
+local tool = Instance.new("Tool")
+tool.Name = "Strike of Darkness"
+tool.RequiresHandle = false
+
+tool.Activated:Connect(function()
+for i = 1, 10 do
+game:GetService("ReplicatedStorage").FinalBlackFlashAssetsShinjukuGojo.Events.GojoBlackFlash:FireServer()
+end
+end)
+
+tool.Parent = game.Players.LocalPlayer.Backpack
+
+local tool = Instance.new("Tool")
+tool.Name = "Black Hole"
+tool.RequiresHandle = false
+
+tool.Activated:Connect(function()
+for i = 1, 20 do
+game:GetService("ReplicatedStorage").CompletelyNewChimeraShadowGardenAssets.DomainEvent:FireServer()
+end
+end)
+
+tool.Parent = game.Players.LocalPlayer.Backpack
+
+local tool = Instance.new("Tool")
+tool.Name = "Absorbing line"
+tool.RequiresHandle = false
+local cooldown = 25
+
+local isCooldown = false
+tool.Activated:Connect(function()
+if isCooldown then return end
+    isCooldown = true
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local function spawnBlackHole(position, rootCFrame)
+    local args = {
+        [1] = "BlackHole",
+        [2] = "Fire",
+        [3] = {
+            ["mousepos"] = position,
+            ["rootcf"] = rootCFrame
+        }
+    }
+
+    game:GetService("ReplicatedStorage"):WaitForChild("Yuki's Black Hole Assets"):WaitForChild("SendServer"):InvokeServer(unpack(args))
+end
+
+local function spawnBlackHolesInLine()
+    local forwardDirection = humanoidRootPart.CFrame.lookVector * 1000
+    local startPosition = humanoidRootPart.Position
+    local endPosition = startPosition + forwardDirection
+
+    for i = 1, 20 do
+        local position = startPosition + (forwardDirection * (i / 30))
+        local rootCFrame = CFrame.new(position)
+
+        coroutine.wrap(function()
+            spawnBlackHole(position, rootCFrame)
+        end)()
+    end
+end
+
+    spawnBlackHolesInLine()
+    wait(cooldown)
+    isCooldown = false
+end)
+
+tool.Parent = game.Players.LocalPlayer.Backpack
+
+local tool = Instance.new("Tool")
+tool.Name = "Domain Expansion: Starry Darkness"
+tool.RequiresHandle = false
+local cooldown = 60
+
+local isCooldown = false
+tool.Activated:Connect(function()
+if isCooldown then return end
+    isCooldown = true
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local function spawnBlackHole(position, rootCFrame)
+    local args = {
+        [1] = "BlackHole",
+        [2] = "Fire",
+        [3] = {
+            ["mousepos"] = position,
+            ["rootcf"] = rootCFrame
+        }
+    }
+
+    game:GetService("ReplicatedStorage"):WaitForChild("Yuki's Black Hole Assets"):WaitForChild("SendServer"):InvokeServer(unpack(args))
+end
+
+local function spawnBlackHolesAroundPlayer()
+    for i = 1, 10 do
+        local angle = (i - 1) * math.pi / 4
+        local position = humanoidRootPart.Position + Vector3.new(math.cos(angle) * 120, 0, math.sin(angle) * 120) -- Рассчитываем позицию для каждой черной дыры
+        local rootCFrame = CFrame.new(position)
+
+        coroutine.wrap(function()
+            spawnBlackHole(position, rootCFrame)
+        end)()
+    end
+end
+
+    spawnBlackHolesAroundPlayer()
+    wait(cooldown)
+    isCooldown = false
+end)
+
+tool.Parent = game.Players.LocalPlayer.Backpack
